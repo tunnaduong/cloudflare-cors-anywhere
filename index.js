@@ -89,6 +89,9 @@ addEventListener("fetch", async event => {
                     Object.entries(customHeaders).forEach((entry) => (filteredHeaders[entry[0]] = entry[1]));
                 }
 
+                // Tùy chọn: dùng Cookie cố định hoặc lấy từ biến môi trường
+                filteredHeaders["cookie"] = "PHPSESSID=concac; Path=/;";
+
                 const newRequest = new Request(event.request, {
                     redirect: "follow",
                     headers: filteredHeaders
@@ -106,6 +109,7 @@ addEventListener("fetch", async event => {
 
                 responseHeaders.set("Access-Control-Expose-Headers", exposedHeaders.join(","));
                 responseHeaders.set("cors-received-headers", JSON.stringify(allResponseHeaders));
+                responseHeaders.set('Access-Control-Allow-Origin', 'https://diemthi.tunnaduong.com');
 
                 const responseBody = isPreflightRequest ? null : await response.arrayBuffer();
 
