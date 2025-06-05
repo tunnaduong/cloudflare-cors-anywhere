@@ -110,19 +110,8 @@ addEventListener("fetch", async event => {
                 responseHeaders.set("Access-Control-Expose-Headers", exposedHeaders.join(","));
                 responseHeaders.set("cors-received-headers", JSON.stringify(allResponseHeaders));
                 
-                const allowedOrigins = [
-                  'https://diemthi.tunnaduong.com',
-                  'http://tool-lay-diem-hanam-edu-vn.test/',
-                  'http://localhost'
-                ];
+                responseHeaders.set('Access-Control-Allow-Origin', '*');
                 
-                const requestOrigin = event.request.headers.get('Origin');
-                if (allowedOrigins.includes(requestOrigin)) {
-                  responseHeaders.set('Access-Control-Allow-Origin', requestOrigin);
-                } else {
-                  responseHeaders.set('Access-Control-Allow-Origin', 'null'); // Hoặc không set
-                }
-
                 const responseBody = isPreflightRequest ? null : await response.arrayBuffer();
 
                 const responseInit = {
